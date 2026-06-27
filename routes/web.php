@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -32,7 +32,8 @@ Route::middleware(['auth','verified'])
     ->name("profile");
 });
 
-Route::resource("projects", ProjectController::class);
+Route::resource("projects", ProjectController::class)
+->middleware('auth','verified');
 
 
 require __DIR__.'/auth.php';

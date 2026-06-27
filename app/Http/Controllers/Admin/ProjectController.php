@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
@@ -37,9 +38,15 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Project $project)
     {
-        //
+
+        return view("projects.show", compact("project"));
+
+        //Altri modi per recuperare post -function show(string $id){}
+        //$project = Project::where("id", $id)->get();
+        //$project = Project::find($id);
+
     }
 
     /**

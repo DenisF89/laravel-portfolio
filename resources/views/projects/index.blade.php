@@ -1,4 +1,4 @@
-@extends("layouts.projects");
+@extends("layouts.projects")
 
 @section("title", "Tutti i progetti")
 
@@ -10,16 +10,16 @@
             <th>Nome</th>
             <th>Cliente</th>
             <th>Anno</th>
-            <th>Descrizione</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach ($projects as $project )
         <tr>
-            <td>{{$project->name}}</td>
+            <td>{{ ucfirst($project->name) }}</td>
             <td>{{$project->client}}</td>
             <td>{{$project->year}}</td>
-            <td>{{$project->description}}</td>
+            <td><a href={{ route("projects.show",$project)}}>Visualizza</a></td>
         </tr>
         @endforeach
     </tbody>
