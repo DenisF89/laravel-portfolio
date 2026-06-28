@@ -4,6 +4,8 @@
 
 @section("content")
 
+   <a href="{{ route("projects.create") }}" class="btn btn-outline-primary mt-3">Aggiungi un progetto</a>
+
 <table class="table w-75 my-3">
     <thead>
         <tr>
@@ -25,16 +27,17 @@
             <td><a href={{ route("projects.edit",$project)}} class="btn btn-outline-warning">Modifica</a></td>
             <td>
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop-{{ $project->id }}">
                     Elimina
                 </button>
+                <x-modal :project="$project" />
             </td>
         </tr>
         @endforeach
     </tbody>
 </table>
-        <x-modal :project="$project" />
 
-        <a href="{{ route("projects.create") }}" class="btn btn-outline-primary">Aggiungi un progetto</a>
+
+
 
 @endsection

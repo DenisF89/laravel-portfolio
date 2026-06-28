@@ -21,6 +21,15 @@
             <input class="form-control" type="number" name="year" id="year" value="{{ now()->year }}" min="2010" max="{{ now()->year }}">
         </div>
         <div class="mb-3">
+            <label class="form-label" for="type">Tipo di progetto</label>
+            <select class="form-select" name="type" id="type">
+                <option value="" disabled selected>Seleziona un tipo di progetto</option>
+                @foreach (config("projects_types") as $value)
+                    <option value="{{ $value }}">{{ $value }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="mb-3">
             <label class="form-label" for="description">Descrizione</label>
             <textarea class="form-control" rows="5" name="description" id="description"></textarea>
         </div>

@@ -37,6 +37,7 @@ use App\Models\Project;
 
         <h3>{{$project->client}}</h3>
         <small>{{$project->year}}</small>
+        <span class="badge bg-secondary">{{ $project->type }}</span>
         <p>{{$project->description}}</p>
     </div>
 
@@ -44,7 +45,7 @@ use App\Models\Project;
         <a class="btn btn-outline-warning" href="{{ route("projects.edit", $project) }}">Modifica</a>
 
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop-{{ $project->id }}">
             Elimina
         </button>
 

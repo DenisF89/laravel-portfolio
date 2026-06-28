@@ -40,6 +40,7 @@ class ProjectController extends Controller
         $newProject->client = $data["client"];
         $newProject->year = $data["year"];
         $newProject->description = $data["description"];
+        $newProject->type = $data["type"] ?? null;
 
         $newProject->save();
 
@@ -88,6 +89,7 @@ class ProjectController extends Controller
         $project->client = $data["client"];
         $project->year = $data["year"];
         $project->description = $data["description"];
+        $project->type = $data["type"] ?? null;
 
         $project->update(); //salva le modifiche al database
 
