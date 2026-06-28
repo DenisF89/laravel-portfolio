@@ -21,7 +21,7 @@ class ProjectsTableSeeder extends Seeder
             $newProject->client = $faker->company();
             $newProject->year = $faker->dateTimeThisDecade()->format('Y');
             $newProject->image = $name.".jpg";
-            $newProject->description = $faker->paragraph();
+            $newProject->description = $faker->paragraphs(3, true);
             $newProject->save();
         }
     }

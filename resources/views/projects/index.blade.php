@@ -4,7 +4,7 @@
 
 @section("content")
 
-<table class="table">
+<table class="table w-75 my-3">
     <thead>
         <tr>
             <th>Nome</th>

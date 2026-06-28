@@ -52,7 +52,16 @@ class ProjectController extends Controller
     public function show(Project $project)
     {
 
-        return view("projects.show", compact("project"));
+        $previousProject = Project::where('id', '<', $project->id)  //filtro tutti i progetti con id minore di quello attuale
+            ->orderBy('id', 'desc')                                 //ordino in modo decrescente
+            ->first();                                              //prendo il primo elemento (quello con id piu alto)
+
+        $nextProject = Project::where('id', '>', $project->id)      //filtro tutti i progetti con id maggiore di quello attuale
+            ->orderBy('id', 'asc')                                  //ordino in modo crescente
+            ->first();                                              //prendo il primo elemento (quello con id piu basso)
+
+        return view('projects.show', compact('project', 'previousProject', 'nextProject')); //passo alla view i tre progetti
+
 
         //Altri modi per recuperare post -function show(string $id){}
         //$project = Project::where("id", $id)->get();

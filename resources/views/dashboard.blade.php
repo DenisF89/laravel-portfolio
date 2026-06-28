@@ -34,7 +34,7 @@
                     </div>
                     @endif
 
-                    <a href="{{ route('admin.index') }}" class="btn btn-primary">
+                    <a href="{{ route('projects.index') }}" class="btn btn-primary">
                         {{ __('Admin') }}
                     </a>
                 </div>

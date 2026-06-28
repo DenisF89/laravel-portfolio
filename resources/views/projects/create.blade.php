@@ -5,7 +5,7 @@
 @section("content")
 
 
-    <form class="form-control" action="{{ route("projects.store") }}" method="POST">
+    <form class="form-control my-5" action="{{ route("projects.store") }}" method="POST">
         @csrf {{--è un token che controlla che la richiesta sia valida e che sia stata inviata dal mio browser per protezione da attacchi (cross-site request forgery) --}}
 
         <div class="mb-3">
