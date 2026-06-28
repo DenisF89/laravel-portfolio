@@ -11,6 +11,8 @@
             <th>Cliente</th>
             <th>Anno</th>
             <th></th>
+            <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -19,10 +21,20 @@
             <td>{{ ucfirst($project->name) }}</td>
             <td>{{$project->client}}</td>
             <td>{{$project->year}}</td>
-            <td><a href={{ route("projects.show",$project)}}>Visualizza</a></td>
+            <td><a href={{ route("projects.show",$project)}} class="btn btn-outline-primary">Visualizza</a></td>
+            <td><a href={{ route("projects.edit",$project)}} class="btn btn-outline-warning">Modifica</a></td>
+            <td>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    Elimina
+                </button>
+            </td>
         </tr>
         @endforeach
     </tbody>
 </table>
+        <x-modal :project="$project" />
+
+        <a href="{{ route("projects.create") }}" class="btn btn-outline-primary">Aggiungi un progetto</a>
 
 @endsection
