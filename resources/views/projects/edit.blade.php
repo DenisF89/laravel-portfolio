@@ -23,16 +23,17 @@
             <input class="form-control" type="number" name="year" id="year" value="{{ $project->year }}" min="2010" max="{{ now()->year }}">
         </div>
         <div class="mb-3">
-            <label class="form-label" for="type">Tipo di progetto</label>
-            <select class="form-select" name="type" id="type">
+            <label class="form-label" for="type_id">Tipo di progetto</label>
+            <select class="form-select" name="type_id" id="type_id">
                 <option value="" disabled>Seleziona un tipo di progetto</option>
-                @foreach (config("projects_types") as $value)
-                    <option value="{{ $value }}" {{ $project->type === $value ? 'selected' : '' }}>
-                        {{ $value }}
+                @foreach ($types as $type)
+                    <option value="{{ $type->id }}" {{ $project->type_id == $type->id ? 'selected' : '' }}>
+                        {{ $type->name }}
                     </option>
                 @endforeach
             </select>
         </div>
+
         <div class="mb-3">
             <label class="form-label" for="description">Descrizione</label>
             <textarea class="form-control" rows="5" name="description" id="description">{{ $project->description }}</textarea>

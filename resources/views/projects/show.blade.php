@@ -1,10 +1,5 @@
 @extends("layouts.projects")
 
-{{-- @php
-use App\Models\Project;
-    $n= count(Project::all());
-@endphp --}}
-
 @section("title")
 
 
@@ -37,7 +32,7 @@ use App\Models\Project;
 
         <h3>{{$project->client}}</h3>
         <small>{{$project->year}}</small>
-        <span class="badge bg-secondary">{{ $project->type }}</span>
+        <span class="badge bg-secondary">{{ $project->type->name }}</span>
         <p>{{$project->description}}</p>
     </div>
 
