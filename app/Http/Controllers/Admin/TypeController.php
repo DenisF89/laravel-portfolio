@@ -98,20 +98,19 @@ class TypeController extends Controller
      */
     public function destroy(Type $type)
     {
+
         /* Versione query usando model Project da importare nel controller
         Project::where('type_id', $type->id)->update([
             'type_id' => null
         ]);
-        */
-
         //versione relazionale 1-many che restituisce l'array dei progetti collegati
         foreach ($type->projects as $project){
             $project->type_id = null;
             $project->save();
         }
-
         //versione con l'opzione fillable nel model (ora non funzionante)
         //$type->projects()->update(['type_id' => null]);
+        */
 
         $type->delete();
         return redirect()->route("types.index");
