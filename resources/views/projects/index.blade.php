@@ -30,7 +30,7 @@
                 <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop-{{ $project->id }}">
                     Elimina
                 </button>
-                <x-modal :project="$project" />
+                <x-modal :data="$project" prefix="projects" />
             </td>
         </tr>
         @endforeach

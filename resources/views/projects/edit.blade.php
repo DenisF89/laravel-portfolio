@@ -25,7 +25,7 @@
         <div class="mb-3">
             <label class="form-label" for="type_id">Tipo di progetto</label>
             <select class="form-select" name="type_id" id="type_id">
-                <option value="" disabled>Seleziona un tipo di progetto</option>
+                <option value="" disabled selected>Seleziona un tipo di progetto</option>
                 @foreach ($types as $type)
                     <option value="{{ $type->id }}" {{ $project->type_id == $type->id ? 'selected' : '' }}>
                         {{ $type->name }}

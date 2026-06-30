@@ -32,7 +32,7 @@
 
         <h3>{{$project->client}}</h3>
         <small>{{$project->year}}</small>
-        <span class="badge bg-secondary">{{ $project->type->name }}</span>
+        <span class="badge bg-secondary">{{ $project->type?->name ?? '' }}</span>
         <p>{{$project->description}}</p>
     </div>
 
@@ -50,6 +50,6 @@
 
     </div>
 
-    <x-modal :project="$project" />
+    <x-modal :data="$project" prefix="projects" />
 
 @endsection
