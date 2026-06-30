@@ -12,12 +12,17 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::all();
+        if($request->filled('type_id')){
+            $projects = Project::where('type_id',$request['type_id'])->get();
+        }else{
+            $projects = Project::all();
+        }
 
+        $types = Type::all();
 
-        return view("projects.index", compact("projects"));
+        return view("projects.index", compact("projects","types"));
     }
 
     /**
