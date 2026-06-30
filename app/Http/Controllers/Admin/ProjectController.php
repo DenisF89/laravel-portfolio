@@ -34,6 +34,30 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        //validazione dei dati
+        $request->validate([
+            "name" => "required|string|max:255",
+            "client" => "required|string|max:255",
+            "year" => "required|integer|min:2010|max:".(date("Y")),
+            "description" => "nullable|string",
+            "type_id" => "nullable|exists:types,id"
+        ],
+        [
+            "name.required" => "Il nome del progetto è obbligatorio.",
+            "name.string" => "Il nome del progetto deve essere un testo.",
+            "name.max" => "Il nome del progetto è troppo lungo.",
+            "client.required" => "Il nome del cliente è obbligatorio.",
+            "client.string" => "Il nome del cliente deve essere un testo.",
+            "client.max" => "Il nome del cliente è troppo lungo.",
+            "year.required" => "L'anno di realizzazione è obbligatorio.",
+            "year.integer" => "L'anno di realizzazione deve essere un numero intero.",
+            "year.min" => "L'anno non può essere inferiore al 2010.",
+            "year.max" => "L'anno non può essere superiore all'anno corrente.",
+            "description.string" => "La descrizione deve essere un testo.",
+            "type_id.exists" => "La tipologia selezionata non esiste."
+        ]
+        );
+
         $data = $request->all(); //crea un array con tutti le coppie chiave-valore che arrivano dal form
 
         $newProject = new Project();
@@ -86,6 +110,30 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
+        //validazione dei dati
+        $request->validate([
+            "name" => "required|string|max:255",
+            "client" => "required|string|max:255",
+            "year" => "required|integer|min:2010|max:".(date("Y")),
+            "description" => "nullable|string",
+            "type_id" => "nullable|exists:types,id"
+        ],
+        [
+            "name.required" => "Il nome del progetto è obbligatorio.",
+            "name.string" => "Il nome del progetto deve essere un testo.",
+            "name.max" => "Il nome del progetto è troppo lungo.",
+            "client.required" => "Il nome del cliente è obbligatorio.",
+            "client.string" => "Il nome del cliente deve essere un testo.",
+            "client.max" => "Il nome del cliente è troppo lungo.",
+            "year.required" => "L'anno di realizzazione è obbligatorio.",
+            "year.integer" => "L'anno di realizzazione deve essere un numero intero.",
+            "year.min" => "L'anno non può essere inferiore al 2010.",
+            "year.max" => "L'anno non può essere superiore all'anno corrente.",
+            "description.string" => "La descrizione deve essere un testo.",
+            "type_id.exists" => "La tipologia selezionata non esiste."
+        ]
+        );
+
         $data = $request->all();
 
         $project->name = $data["name"];
