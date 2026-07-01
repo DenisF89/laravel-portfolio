@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Http\Request;
 
@@ -31,7 +32,8 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view("projects.create", compact("types"));
+        $tecs = Technology::all();
+        return view("projects.create", compact('types','tecs'));
     }
 
     /**
@@ -40,12 +42,14 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         //validazione dei dati
-        $request->validate([
+        $data = $request->validate([
             "name" => "required|string|max:255",
             "client" => "required|string|max:255",
             "year" => "required|integer|min:2010|max:".(date("Y")),
-            "description" => "nullable|string",
-            "type_id" => "nullable|exists:types,id"
+            "description" => "required|string",
+            "type_id" => "nullable|exists:types,id",
+            "tecs" => "nullable|array",
+            "tecs.*" => "exists:technologies,id"   //tutti gli elementi dentro l'array devono corrispondere a un id registrato nella tabella tecnology
         ],
         [
             "name.required" => "Il nome del progetto è obbligatorio.",
@@ -58,12 +62,15 @@ class ProjectController extends Controller
             "year.integer" => "L'anno di realizzazione deve essere un numero intero.",
             "year.min" => "L'anno non può essere inferiore al 2010.",
             "year.max" => "L'anno non può essere superiore all'anno corrente.",
+            "description.required" => "La descrizione è obbligatoria.",
             "description.string" => "La descrizione deve essere un testo.",
-            "type_id.exists" => "La tipologia selezionata non esiste."
+            "type_id.exists" => "La tipologia selezionata non esiste.",
+            "tecs.array" => "valori non validi",
+            "tecs.exists" => "valori non esistenti nel database"
         ]
         );
 
-        $data = $request->all(); //crea un array con tutti le coppie chiave-valore che arrivano dal form
+        //$data = $request->all(); //crea un array con tutti le coppie chiave-valore che arrivano dal form
 
         $newProject = new Project();
 
@@ -74,6 +81,12 @@ class ProjectController extends Controller
         $newProject->type_id = $data["type_id"] ?? null;
 
         $newProject->save();
+
+        //dopo aver salvato il progetto e creato il suo id posso creare la sua relazione molti-a-molti con le tecnologie
+        if($request->has('tecs')){
+             $newProject->technologies()->attach($data['tecs']);
+        }
+
 
         return redirect()->route("projects.show", $newProject);
     }
@@ -107,7 +120,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
-        return view("projects.edit", compact("project", "types"));
+        $tecs = Technology::all();
+        return view("projects.edit", compact("project", "types","tecs"));
     }
 
     /**
@@ -116,12 +130,14 @@ class ProjectController extends Controller
     public function update(Request $request, Project $project)
     {
         //validazione dei dati
-        $request->validate([
+        $data = $request->validate([
             "name" => "required|string|max:255",
             "client" => "required|string|max:255",
             "year" => "required|integer|min:2010|max:".(date("Y")),
-            "description" => "nullable|string",
-            "type_id" => "nullable|exists:types,id"
+            "description" => "required|string",
+            "type_id" => "nullable|exists:types,id",
+            "tecs" => "nullable|array",
+            "tecs.*" => "exists:technologies,id"   //tutti gli elementi dentro l'array devono corrispondere a un id registrato nella tabella tecnology
         ],
         [
             "name.required" => "Il nome del progetto è obbligatorio.",
@@ -134,12 +150,11 @@ class ProjectController extends Controller
             "year.integer" => "L'anno di realizzazione deve essere un numero intero.",
             "year.min" => "L'anno non può essere inferiore al 2010.",
             "year.max" => "L'anno non può essere superiore all'anno corrente.",
+            "description.required" => "La descrizione è obbligatoria.",
             "description.string" => "La descrizione deve essere un testo.",
             "type_id.exists" => "La tipologia selezionata non esiste."
         ]
         );
-
-        $data = $request->all();
 
         $project->name = $data["name"];
         $project->client = $data["client"];
@@ -148,6 +163,12 @@ class ProjectController extends Controller
         $project->type_id = $data["type_id"] ?? null;
 
         $project->update(); //salva le modifiche al database
+
+        if($request->has('tecs')){                              //se nella richiesta c'è il parametro tecs
+             $project->technologies()->sync($data['tecs']);     //sincronizza le relazioni= salva id non presenti in db, cancella gli id non presenti in tecs
+        }
+        else{$project->technologies()->detach();}               //se non c'è parametro tecs, vuol dire che nessuno è stato selezionato e quindi cancella tutte le relazioni del progetto con le tecs
+
 
         return redirect()->route("projects.show", $project);
     }

@@ -31,8 +31,20 @@
         <img class="img-fluid w-50 my-3" src="{{ Vite::asset('resources/img/'.$project->image) }}" alt="{{ $project->image }}">
 
         <h3>{{$project->client}}</h3>
-        <small>{{$project->year}}</small>
-        <span class="badge bg-secondary">{{ $project->type?->name ?? '' }}</span>
+
+        <div>
+            <small>{{$project->year}}</small>
+            <span class="badge bg-secondary">{{ $project->type?->name ?? '' }}</span>
+        </div>
+
+        <div>
+            @forelse ($project->technologies as $tec )
+                <span class="badge" style="background-color: {{ $tec->color }}">{{ $tec->name }}</span>
+            @empty
+                <small class="text-muted">Nessuna tecnologia associata</small>
+            @endforelse
+        </div>
+
         <p>{{$project->description}}</p>
     </div>
 

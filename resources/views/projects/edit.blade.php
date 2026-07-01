@@ -46,6 +46,16 @@
             @enderror
         </div>
 
+        <div class="mb-3 d-flex flex-wrap gap-5">
+            @foreach ($tecs as $tec)
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="check-{{ $tec->id }}" name="tecs[]" value="{{ $tec->id }}"
+                    {{ $project->technologies->contains($tec->id) ? 'checked' : '' }}>
+                    <label class="form-check-label" for="check-{{ $tec->id }}">{{ $tec->name }}</label>
+                </div>
+            @endforeach
+        </div>
+
         <div class="mb-3">
             <label class="form-label" for="description">Descrizione</label>
             <textarea class="form-control @error('description') is-invalid @enderror" rows="5" name="description" id="description">{{ old('description', $project->description) }}</textarea>
