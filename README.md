@@ -1,4 +1,3 @@
-````markdown
 <p align="center">
     <a href="https://laravel.com" target="_blank">
         <img
@@ -287,4 +286,3 @@ Progetto realizzato da **Denis Filippini** come esercitazione su Laravel, l'arch
 # Licenza
 
 Il progetto è stato realizzato a scopo didattico.
-````
